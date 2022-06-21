@@ -18,11 +18,9 @@ public class TorNetwork : ITorNetwork
     {
         this.httpClientFactory = httpClientFactory;
 
-        var selectMany = GetIssueFilenames()
-            .SelectMany(s => s.ToObservable()
-                .SelectMany(GetIssue));
-
-        Issues = selectMany;
+        Issues = GetIssueFilenames()
+            .SelectMany(uris => uris.ToObservable()
+                .SelectMany(GetIssueFromUri));
 
         deserializer = new DeserializerBuilder()
             .IgnoreUnmatchedProperties()
@@ -52,7 +50,7 @@ public class TorNetwork : ITorNetwork
         return input;
     }
 
-    private IObservable<Issue> GetIssue(Uri path)
+    private IObservable<Issue> GetIssueFromUri(Uri path)
     {
         var observable = Observable
             .Using(() => httpClientFactory.CreateClient(),
