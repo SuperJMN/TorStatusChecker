@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TorStatusChecker.Tests", "TorStatusChecker.Tests\TorStatusChecker.Tests.csproj", "{ED44D62A-367E-420F-9C94-4B156DC2FB18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TorStatusChecker", "TorStatusChecker\TorStatusChecker.csproj", "{37AE8831-7F7F-4722-9C86-A2109E3EB51C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED44D62A-367E-420F-9C94-4B156DC2FB18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED44D62A-367E-420F-9C94-4B156DC2FB18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED44D62A-367E-420F-9C94-4B156DC2FB18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED44D62A-367E-420F-9C94-4B156DC2FB18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37AE8831-7F7F-4722-9C86-A2109E3EB51C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37AE8831-7F7F-4722-9C86-A2109E3EB51C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37AE8831-7F7F-4722-9C86-A2109E3EB51C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37AE8831-7F7F-4722-9C86-A2109E3EB51C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A5951BB9-A8C1-4EA8-9D54-42F11209F77D}
+	EndGlobalSection
+EndGlobal
