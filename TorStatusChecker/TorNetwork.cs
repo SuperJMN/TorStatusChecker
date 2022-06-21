@@ -6,7 +6,7 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace TorStatusChecker;
 
-public class Checker
+public class TorNetwork : ITorNetwork
 {
     private const string IssuesPath = "https://gitlab.torproject.org/api/v4/projects/786/repository/tree?path=content/issues";
     private static readonly Uri IssuesRoot = new("https://gitlab.torproject.org/tpo/tpa/status-site/-/raw/main/");
@@ -14,13 +14,13 @@ public class Checker
     private readonly IDeserializer deserializer;
     private readonly IHttpClientFactory httpClientFactory;
 
-    public Checker(IHttpClientFactory httpClientFactory)
+    public TorNetwork(IHttpClientFactory httpClientFactory)
     {
         this.httpClientFactory = httpClientFactory;
 
         var selectMany = GetIssueFilenames()
             .SelectMany(s => s.ToObservable()
-                .SelectMany(GetIssue).ToList());
+                .SelectMany(GetIssue));
 
         Issues = selectMany;
 
@@ -30,7 +30,7 @@ public class Checker
             .Build();
     }
 
-    public IObservable<IList<Issue>> Issues { get; }
+    public IObservable<Issue> Issues { get; }
 
     private static IObservable<Uri> ParseResponse(string responseText)
     {
