@@ -2,7 +2,7 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using Xunit.Abstractions;
 
-namespace TorStatusChecker.Tests
+namespace TorStatusChecker.Tests.Acceptance
 {
     public class TorStatusCheckerTests
     {
@@ -17,7 +17,7 @@ namespace TorStatusChecker.Tests
         [Trait("Category", "Acceptance")]
         public async Task There_should_be_some_issues()
         {
-            var sut = new TorNetwork(new HttpClientFactory());
+            var sut = new TorNetwork(new Fetcher(new HttpClientFactory()));
             var result = await sut.Issues.ToList();
             var issues = result.Where(issue => !issue.Resolved);
             Assert.True(issues.Any());
@@ -27,9 +27,9 @@ namespace TorStatusChecker.Tests
         [Trait("Category", "Acceptance")]
         public async Task Interval()
         {
-            var reporter = new TorNetwork(new HttpClientFactory());
+            var reporter = new TorNetwork(new Fetcher(new HttpClientFactory()));
             var newThreadScheduler = new NewThreadScheduler();
-            var checker = new StatusChecker(reporter, TimeSpan.FromSeconds(5),  newThreadScheduler);
+            var checker = new StatusChecker(reporter, TimeSpan.FromSeconds(5), newThreadScheduler);
             checker.Issues.Subscribe(issues =>
             {
                 issues.ToList().ForEach(issue => output.WriteLine(issue.ToString()));

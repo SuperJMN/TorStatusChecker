@@ -1,4 +1,4 @@
-namespace TorStatusChecker.Tests;
+namespace TorStatusChecker.Tests.Acceptance;
 
 public class HttpClientFactory : IHttpClientFactory
 {

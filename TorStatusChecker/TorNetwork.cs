@@ -8,15 +8,15 @@ namespace TorStatusChecker;
 
 public class TorNetwork : ITorNetwork
 {
-    private const string IssuesPath = "https://gitlab.torproject.org/api/v4/projects/786/repository/tree?path=content/issues";
+    private static readonly Uri IssuesPath = new("https://gitlab.torproject.org/api/v4/projects/786/repository/tree?path=content/issues");
     private static readonly Uri IssuesRoot = new("https://gitlab.torproject.org/tpo/tpa/status-site/-/raw/main/");
 
     private readonly IDeserializer deserializer;
-    private readonly IHttpClientFactory httpClientFactory;
+    private readonly IUriBasedStringStore stringStore;
 
-    public TorNetwork(IHttpClientFactory httpClientFactory)
+    public TorNetwork(IUriBasedStringStore stringStore)
     {
-        this.httpClientFactory = httpClientFactory;
+        this.stringStore = stringStore;
 
         Issues = GetIssueFilenames()
             .SelectMany(uris => uris.ToObservable()
@@ -43,8 +43,7 @@ public class TorNetwork : ITorNetwork
     private IObservable<IList<Uri>> GetIssueFilenames()
     {
         var input = Observable
-            .Using(() => httpClientFactory.CreateClient(),
-                httpClient => Observable.FromAsync(() => httpClient.GetStringAsync(IssuesPath)))
+            .FromAsync(() => stringStore.Fetch(IssuesPath))
             .SelectMany(s => ParseResponse(s).ToList());
 
         return input;
@@ -53,8 +52,7 @@ public class TorNetwork : ITorNetwork
     private IObservable<Issue> GetIssueFromUri(Uri path)
     {
         var observable = Observable
-            .Using(() => httpClientFactory.CreateClient(),
-                httpClient => Observable.FromAsync(() => httpClient.GetStringAsync(path)))
+            .FromAsync(() => stringStore.Fetch(path))
             .Select(GetIssueFromContent);
         return observable;
     }
