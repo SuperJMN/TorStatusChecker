@@ -10,6 +10,6 @@ public class Issue
 
     public override string ToString()
     {
-        return $"{nameof(Title)}: {Title}, {nameof(Date)}: {Date}, {nameof(Resolved)}: {Resolved}, {nameof(Severity)}: {Severity}, {nameof(Affected)}: {Affected}";
+        return $"{nameof(Title)}: {Title}, {nameof(Date)}: {Date}, {nameof(Resolved)}: {Resolved}, {nameof(Severity)}: {Severity}, {nameof(Affected)}: {{{string.Join(", ", Affected)}}}";
     }
 }
